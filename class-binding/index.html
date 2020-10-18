@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Binding</title>
+
+    <style type="text/css">
+        .color-red {
+            color: red;
+            font-family: sans-serif;
+        }
+        .color-blue {
+            color: blue;
+            font-family: sans-serif;
+        }
+        .is-loading {
+            background: red;
+            font-family: sans-serif;
+        }
+        .back-green {
+            background: green;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <button title="button title">Hover your mouse</button>
+        <!-- Binding the title attribute (HTML) with the title var from script -->
+        <!-- We can use the shorthand :title="title" instead of v-bind:title -->
+        <button title="title" v-bind:title="title">Hover your mouse</button>
+
+        <!-- Using class binding to set a new class -->
+        <h1 :class="className">Hello Class Binding</h1>
+        <!-- Using a method and a var on data to toggle the background -->
+        <h1 :class="{ 'is-loading': isLoading, 'color-blue': isBlue }" @click="toggleClass">Another Class Binding</h1>
+        <!-- Binding a group of informations using the computed attribute -->
+        <h1 :class="classObject" @click="toggleClass">One more Class Binding</h1>
+        <!-- Using multiple classes by an array of CSS classes -->
+        <h1 :class="[className, classBackgroundGreen]">Array Class Binding</h1>
+        <!-- Styling using binding -->
+        <h1 :style="{color: azul, fontSize: 20 + 'px'}">Style Binding</h1>
+        <!-- Using an object defined at data to style the element -->
+        <h1 :style="styleObject">styleObject Binding</h1>
+
+        <!-- Another directives for binding -->
+        <!-- v-once makes sure that the message will be displayed with the first result -->
+        <div v-once> {{ message }} </div>
+        <!-- Displaying content with HTML and normal -->
+        <div v-html="htmlContent"></div>
+        <div v-text="htmlContent"></div>
+    </div>
+    
+    <script src="http://unpkg.com/vue"></script>
+    <script>
+        var app = new Vue({
+            el: '#root',
+            data: {
+                title: 'Now the is another stuff... JS magic dude!',
+                className: 'color-blue',
+                isLoading: false,
+                isBlue: true,
+                classBackgroundGreen: 'back-green',
+
+                azul: 'blue',
+                styleObject: {
+                    color: 'yellow',
+                    fontSize: '13px'
+                },
+
+                message: 'Hello World!',
+                htmlContent: '<strong>Thats the HTML content...</strong>'
+            },
+            methods: {
+                toggleClass() {
+                    this.isLoading = !this.isLoading;
+                    this.isBlue = !this.isBlue;
+                }
+            },
+            computed: {
+                classObject: function() {
+                    return {
+                        'is-loading': true,
+                        'color-blue': this.isBlue
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
